@@ -34,11 +34,6 @@ $result=USAePay\Batches::get();
 
 ?>
 ```
-See ReferenceList for all batch, customer and transactions classes.
-
-## Authorization
-
-In Configuration run setAuthorization([API Key],[Pin])
 
 ## Author
 

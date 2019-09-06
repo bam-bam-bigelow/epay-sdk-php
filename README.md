@@ -3,6 +3,7 @@ USAePay PHP SDK
 ## Requirements
 
 PHP 5.5 and later
+
 Composer
 
 ## Installation & Usage

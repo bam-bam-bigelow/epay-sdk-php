@@ -1,0 +1,26 @@
+{
+    "name":"usaepay/php-sdk",
+    "description": "USAePay php sdk",
+    "keywords": [
+        "usaepay",
+        "payments",
+        "creditcard"
+    ],
+    "homepage": "https://www.usaepay.com",
+    "authors": [
+        {
+            "name": "USAePay",
+            "homepage": "https://www.usaepay.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "autoload": {
+        "psr-4": { "USAePay\\" : "lib/" }
+    }
+}

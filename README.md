@@ -10,7 +10,7 @@ Composer
 
 ### Composer
 
-To install run `composer install usaepay/php-sdk`
+To install run `composer install usaepay/usaepay-php`
 
 Or download and run `composer install` within the project directory
 

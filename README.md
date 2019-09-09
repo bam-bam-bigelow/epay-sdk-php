@@ -10,7 +10,7 @@ Composer
 
 ### Composer
 
-To install run `composer install usaepay/usaepay-php`
+To install run `composer require usaepay/usaepay-php`
 
 Or download and run `composer install` within the project directory
 

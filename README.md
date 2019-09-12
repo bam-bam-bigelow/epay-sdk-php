@@ -11,8 +11,9 @@ Composer
 ### Composer
 
 To install run `composer require usaepay/usaepay-php`
+then run `composer install`
 
-Or download and run `composer install` within the project directory
+Or clone git and run `composer install` within the project directory
 
 ### Dependencies
 

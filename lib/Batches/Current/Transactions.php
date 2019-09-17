@@ -2,34 +2,23 @@
 
 namespace USAePay\Batches\Current;
 
-class Transactions
-{
-	public function get($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\BatchApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
+class Transactions{
 
-		if(array_key_exists('limit',$Data)) $limit=$Data['limit'];
-		else $limit="";
+	public function get($Data=array()){
+		$Path="/batches/current/transactions";
+		$Params=[];
 
-		if(array_key_exists('offset',$Data)) $offset=$Data['offset'];
-		else $offset="";
+		if(array_key_exists('limit',$Data)) $Params['limit']=$Data['limit'];
+		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];
+		if(array_key_exists('return_bin',$Data)) $Params['return_bin']=$Data['return_bin'];
 
-		if(array_key_exists('return_bin',$Data)) $return_bin=$Data['return_bin'];
-		else $return_bin="";
-
-	try{
-		return $apiInstance->batchesCurrentTransactionsGet($limit,$offset,$return_bin,$Data);
-	}
-	catch(\exception $e){
-		return $e->getMessage();
-	}
-
+		try{
+			return \USAePay\API::runCall('get',$Path,$Data,$Params);
+		}
+		catch(\exception $e){
+			return $e->getMessage();
+		}
 
 	}
-
 }
 ?>

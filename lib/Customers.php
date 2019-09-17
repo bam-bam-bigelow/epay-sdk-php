@@ -2,104 +2,80 @@
 
 namespace USAePay;
 
-class Customers
-{
-	public function get($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\CustomerApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
+class Customers{
 
+	public function get($Data=array()){
+		$Path="/customers";
+		$Params=[];
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
-		unset($Data['custkey']);
-
+			unset($Data['custkey']);
+			$Path="/customers/$custkey";
 			try{
-				return $apiInstance->customersCustkeyGet($custkey,$Data);
+				return \USAePay\API::runCall('get',$Path,$Data,$Params);
 			}
 			catch(\exception $e){
 				return $e->getMessage();
 			}
 		}
 
-	try{
-		return $apiInstance->customersGet($Data);
-	}
-	catch(\exception $e){
-		return $e->getMessage();
-	}
+		if(array_key_exists('limit',$Data)) $Params['limit']=$Data['limit'];
+		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];
 
-
-	}
-
-
-	public function post($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\CustomerApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
-
-	try{
-		return $apiInstance->customersPost($Data);
-	}
-	catch(\exception $e){
-		return $e->getMessage();
-	}
-
+		try{
+			return \USAePay\API::runCall('get',$Path,$Data,$Params);
+		}
+		catch(\exception $e){
+			return $e->getMessage();
+		}
 
 	}
 
+	public function post($Data=array()){
+		$Path="/customers";
+		$Params=[];
 
-	public function delete($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\CustomerApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
+		try{
+			return \USAePay\API::runCall('post',$Path,$Data,$Params);
+		}
+		catch(\exception $e){
+			return $e->getMessage();
+		}
 
+	}
+
+	public function delete($Data=array()){
+		$Path="/customers/$custkey";
+		$Params=[];
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
-		unset($Data['custkey']);
-
+			unset($Data['custkey']);
+			$Path="/customers/$custkey";
 			try{
-				return $apiInstance->customersCustkeyDelete($custkey,$Data);
+				return \USAePay\API::runCall('delete',$Path,$Data,$Params);
 			}
 			catch(\exception $e){
 				return $e->getMessage();
 			}
 		}
 
-
 	}
 
-
-	public function put($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\CustomerApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
-
+	public function put($Data=array()){
+		$Path="/customers/$custkey";
+		$Params=[];
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
-		unset($Data['custkey']);
-
+			unset($Data['custkey']);
+			$Path="/customers/$custkey";
 			try{
-				return $apiInstance->customersCustkeyPut($custkey,$Data);
+				return \USAePay\API::runCall('put',$Path,$Data,$Params);
 			}
 			catch(\exception $e){
 				return $e->getMessage();
 			}
 		}
 
-
 	}
-
 }
 ?>

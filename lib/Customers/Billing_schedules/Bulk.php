@@ -2,30 +2,23 @@
 
 namespace USAePay\Customers\Billing_schedules;
 
-class Bulk
-{
-	public function delete($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\CustomerApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
+class Bulk{
 
+	public function delete($Data=array()){
+		$Path="/customers/$custkey/billing_schedules/bulk";
+		$Params=[];
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
-		unset($Data['custkey']);
-
+			unset($Data['custkey']);
+			$Path="/customers/$custkey/billing_schedules/bulk";
 			try{
-				return $apiInstance->customersCustkeyBillingschedulesBulkDelete($custkey,$Data);
+				return \USAePay\API::runCall('delete',$Path,$Data,$Params);
 			}
 			catch(\exception $e){
 				return $e->getMessage();
 			}
 		}
 
-
 	}
-
 }
 ?>

@@ -2,49 +2,36 @@
 
 namespace USAePay;
 
-class Tokens
-{
-	public function post($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\TokenApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
+class Tokens{
 
-	try{
-		return $apiInstance->tokensPost($Data);
-	}
-	catch(\exception $e){
-		return $e->getMessage();
-	}
+	public function post($Data=array()){
+		$Path="/tokens";
+		$Params=[];
 
+		try{
+			return \USAePay\API::runCall('post',$Path,$Data,$Params);
+		}
+		catch(\exception $e){
+			return $e->getMessage();
+		}
 
 	}
 
-
-	public function get($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\TokenApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
-
+	public function get($Data=array()){
+		$Path="/tokens/$cardref";
+		$Params=[];
 		if(array_key_exists('cardref',$Data)){
 			$cardref=$Data['cardref'];
-		unset($Data['cardref']);
-
+			unset($Data['cardref']);
+			$Path="/tokens/$cardref";
 			try{
-				return $apiInstance->tokensCardrefGet($cardref,$Data);
+				return \USAePay\API::runCall('get',$Path,$Data,$Params);
 			}
 			catch(\exception $e){
 				return $e->getMessage();
 			}
 		}
 
-
 	}
-
 }
 ?>

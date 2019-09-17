@@ -2,30 +2,23 @@
 
 namespace USAePay\Transactions;
 
-class Send
-{
-	public function post($Data=array())
-	{
-		if(!\USAePay\API::$config) return ["Error"=>"Api Authentication not found, please run USAePay\API::setAuthentication"];
-		$apiInstance = new \USAePay\RestAPI\TransactionApi(
-			new \GuzzleHttp\Client(["timeout"=>\USAePay\API::$timeout]),
-			\USAePay\API::$config
-		);
+class Send{
 
+	public function post($Data=array()){
+		$Path="/transactions/$trankey/send";
+		$Params=[];
 		if(array_key_exists('trankey',$Data)){
 			$trankey=$Data['trankey'];
-		unset($Data['trankey']);
-
+			unset($Data['trankey']);
+			$Path="/transactions/$trankey/send";
 			try{
-				return $apiInstance->transactionsTrankeySendPost($trankey,$Data);
+				return \USAePay\API::runCall('post',$Path,$Data,$Params);
 			}
 			catch(\exception $e){
 				return $e->getMessage();
 			}
 		}
 
-
 	}
-
 }
 ?>

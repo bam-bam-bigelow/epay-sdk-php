@@ -20,7 +20,6 @@ Or clone git and run `composer install` within the project directory
 - curl
 - json
 - mbstring
-- guzzlehttp/guzzle
 
 ## Getting Started
 

@@ -156,6 +156,7 @@ class API
           curl_setopt($curl, CURLOPT_POST, true);
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
           curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+          break;
           
         case 'put':
           curl_setopt($curl, CURLOPT_POST, true);

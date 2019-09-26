@@ -7,6 +7,7 @@ class Customers{
 	public function get($Data=array()){
 		$Path="/customers";
 		$Params=[];
+
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);
@@ -47,6 +48,7 @@ class Customers{
 	public function delete($Data=array()){
 		$Path="/customers/$custkey";
 		$Params=[];
+
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);
@@ -64,6 +66,7 @@ class Customers{
 	public function put($Data=array()){
 		$Path="/customers/$custkey";
 		$Params=[];
+
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);

@@ -7,7 +7,9 @@ class Billing_schedules{
 	public function get($Data=array()){
 		$Path="/customers/$custkey/billing_schedules";
 		$Params=[];
-		if(array_key_exists('custkey',$Data)){		if(array_key_exists('custkey',$Data)&&array_key_exists('billing_schedule_key',$Data)){
+
+		if(array_key_exists('custkey',$Data)){
+		if(array_key_exists('custkey',$Data)&&array_key_exists('billing_schedule_key',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);
 			$billing_schedule_key=$Data['billing_schedule_key'];
@@ -37,6 +39,7 @@ class Billing_schedules{
 	public function post($Data=array()){
 		$Path="/customers/$custkey/billing_schedules";
 		$Params=[];
+
 		if(array_key_exists('custkey',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);
@@ -54,6 +57,7 @@ class Billing_schedules{
 	public function delete($Data=array()){
 		$Path="/customers/$custkey/billing_schedules/$billing_schedule_key";
 		$Params=[];
+
 		if(array_key_exists('custkey',$Data)&&array_key_exists('billing_schedule_key',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);
@@ -73,6 +77,7 @@ class Billing_schedules{
 	public function put($Data=array()){
 		$Path="/customers/$custkey/billing_schedules/$billing_schedule_key";
 		$Params=[];
+
 		if(array_key_exists('custkey',$Data)&&array_key_exists('billing_schedule_key',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);

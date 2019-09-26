@@ -7,6 +7,7 @@ class Batches{
 	public function get($Data=array()){
 		$Path="/batches";
 		$Params=[];
+
 		if(array_key_exists('batch_key',$Data)){
 			$batch_key=$Data['batch_key'];
 			unset($Data['batch_key']);

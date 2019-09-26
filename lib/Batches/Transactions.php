@@ -7,6 +7,7 @@ class Transactions{
 	public function get($Data=array()){
 		$Path="/batches/$batch_key/transactions";
 		$Params=[];
+
 		if(array_key_exists('batch_key',$Data)){
 		if(array_key_exists('limit',$Data)) $Params['limit']=$Data['limit'];
 		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];

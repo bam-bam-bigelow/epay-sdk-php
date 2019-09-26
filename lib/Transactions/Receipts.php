@@ -7,6 +7,7 @@ class Receipts{
 	public function get($Data=array()){
 		$Path="/transactions/$trankey/receipts/$receipt_key";
 		$Params=[];
+
 		if(array_key_exists('trankey',$Data)&&array_key_exists('receipt_key',$Data)){
 			$trankey=$Data['trankey'];
 			unset($Data['trankey']);

@@ -7,6 +7,7 @@ class Bulk{
 	public function delete($Data=array()){
 		$Path="/customers/$custkey/billing_schedules/$billing_schedule_key/billing_schedule_rules/bulk";
 		$Params=[];
+
 		if(array_key_exists('custkey',$Data)&&array_key_exists('billing_schedule_key',$Data)){
 			$custkey=$Data['custkey'];
 			unset($Data['custkey']);

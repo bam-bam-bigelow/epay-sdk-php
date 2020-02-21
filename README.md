@@ -25,13 +25,13 @@ Or clone git and run `composer install` within the project directory
 
 After following installation instructions run the following:
 
-```php
+```
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 USAePay\API::setAuthentication('Enter_API_Key_Here','Enter_API_Pin_Here');
 
-$result=USAePay\Batches::get();
+$result=USAePay\Transactions::get();
 
 ?>
 ```

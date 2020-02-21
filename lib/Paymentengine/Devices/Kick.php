@@ -1,20 +1,20 @@
 <?php
-namespace USAePay\Transactions;
+namespace USAePay\Paymentengine\Devices;
 use \USAePay\API as API;
 use \USAePay\Exception\CurlException as CurlException;
 use \USAePay\Exception\SDKException as SDKException;
 use \USAePay\Exception\ueException as ueException;
 
 
-class Send{
+class Kick{
 
 	public function post($Data=array()){
-		if(!array_key_exists("trankey",$Data)) throw new SDKexception("Send post requires trankey");
+		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Kick post requires devicekey");
 
-		$trankey=$Data["trankey"];
-		unset($Data["trankey"]);
+		$devicekey=$Data["devicekey"];
+		unset($Data["devicekey"]);
 
-		$Path="/transactions/$trankey/send";
+		$Path="/paymentengine/devices/$devicekey/kick";
 		$Params=[];
 
 		try{

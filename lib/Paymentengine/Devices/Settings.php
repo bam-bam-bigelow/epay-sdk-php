@@ -1,25 +1,21 @@
 <?php
-namespace USAePay;
+namespace USAePay\Paymentengine\Devices;
 use \USAePay\API as API;
 use \USAePay\Exception\CurlException as CurlException;
 use \USAePay\Exception\SDKException as SDKException;
 use \USAePay\Exception\ueException as ueException;
 
 
-class Transactions{
+class Settings{
 
 	public function get($Data=array()){
-		$Path="/transactions";
+		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Settings get requires devicekey");
+
+		$devicekey=$Data["devicekey"];
+		unset($Data["devicekey"]);
+
+		$Path="/paymentengine/devices/$devicekey/settings";
 		$Params=[];
-
-		if(array_key_exists('limit',$Data)) $Params['limit']=$Data['limit'];
-		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];
-		if(array_key_exists('fuzzy',$Data)) $Params['fuzzy']=$Data['fuzzy'];
-
-		if(array_key_exists("trankey",$Data)){
-			$Path.='/'.$Data["trankey"];
-			unset($Data["trankey"]);
-		}
 
 		try{
 			return API::runCall('get',$Path,$Data,$Params);
@@ -38,12 +34,17 @@ class Transactions{
 		}
 	}
 
-	public function post($Data=array()){
-		$Path="/transactions";
+	public function put($Data=array()){
+		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Settings put requires devicekey");
+
+		$devicekey=$Data["devicekey"];
+		unset($Data["devicekey"]);
+
+		$Path="/paymentengine/devices/$devicekey/settings";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('put',$Path,$Data,$Params);
 		}
 		catch(CurlException $e){
 			throw $e;

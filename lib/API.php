@@ -26,6 +26,8 @@ class API
   
   static $endpoint_key='v2';
   
+  static $local_test=false;
+  
   static $subdomain='secure';
   
   static $high_availability=false;
@@ -44,7 +46,12 @@ class API
     self::$password="$api_key:$hash";
 	}
   
+  static function testLocally($local=True){
+    self::$local_test = $local;
+  }
+  
   static function setTimeOut($timeout_value){
+    if($timeout_value>60||$timeout_value<1) throw new Exception\SDKException("Invalid timeout value, please pick a value between 0-60.");
     self::$timeout = $timeout_value;
   }
   
@@ -105,6 +112,7 @@ class API
 				curl_setopt($curl, CURLOPT_URL, $baseURL);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				$curl_response = curl_exec($curl);
+        if(!$curl_response)throw new Exception\CurlException(curl_error($curl));
 				$extra_info=curl_getinfo($curl);
 				curl_close($curl);
 				$status=array(
@@ -114,12 +122,12 @@ class API
 				);
 				return $status;
 			default:
-				return "Subdomain Not Found, Please check our high availability documentation.";
+				throw new Exception\SDKException("Subdomain Not Found, Please check our high availability documentation.");
 		}
   }
   
   function runCall($type,$path,$data=false,$params=false){
-    if(!self::$password) return ["Error"=>"Please set api key and pin with setAuthentication before attempting other calls."];
+    if(!self::$password) throw new Exception\SDKException("Please set api key and pin with setAuthentication before attempting other calls.");
     if($data) $curl_post_data=json_encode($data);
     $first=true;
     if($params&&count($params)>0){
@@ -129,7 +137,7 @@ class API
       }
     }
     if(self::$high_availability){
-      return "Automated high availability not available yet.";
+      throw new Exception\SDKException("Feature not yet available.");
     }
     else{
       $service_url=self::$base_url.$path;
@@ -165,12 +173,18 @@ class API
           break;
           
         default:
-          return ["Error"=>"Unkown Call Type"];
+          throw new Exception\SDKException("Unexpected Call Type");
       }
       try{
-        $curl_response = curl_exec($curl);
+        if(self::$local_test) $curl_response = \USAePay\MockHandler::mockCall($type,$service_url,($curl_post_data?$curl_post_data:'[]'));
+        else {
+          $curl_response = curl_exec($curl);
+          if(!$curl_response)throw new Exception\CurlException(curl_error($curl));
+        }
         $response = json_decode($curl_response);
-        $error_msg = curl_error($curl);
+        if(is_object($response)){
+          if(property_exists($response,"error")&&(!property_exists($response,"result")||$response->result=="error"))throw new Exception\ueException($response->error,$response->errorcode);
+        }
         return $response;
       }
 

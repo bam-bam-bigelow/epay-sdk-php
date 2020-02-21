@@ -1,6 +1,10 @@
-<?php 
-
+<?php
 namespace USAePay\Batches\Current;
+use \USAePay\API as API;
+use \USAePay\Exception\CurlException as CurlException;
+use \USAePay\Exception\SDKException as SDKException;
+use \USAePay\Exception\ueException as ueException;
+
 
 class Transactions{
 
@@ -13,12 +17,20 @@ class Transactions{
 		if(array_key_exists('return_bin',$Data)) $Params['return_bin']=$Data['return_bin'];
 
 		try{
-			return \USAePay\API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params);
 		}
-		catch(\exception $e){
-			return $e->getMessage();
+		catch(CurlException $e){
+			throw $e;
 		}
-
+		catch(SDKException $e){
+			throw $e;
+		}
+		catch(ueException $e){
+			throw $e;
+		}
+		catch(\Exception $e){
+			throw new SDKException("Unexpected exception thrown");
+		}
 	}
 }
 ?>

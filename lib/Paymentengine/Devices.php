@@ -1,25 +1,23 @@
 <?php
-namespace USAePay\Customers;
+namespace USAePay\Paymentengine;
 use \USAePay\API as API;
 use \USAePay\Exception\CurlException as CurlException;
 use \USAePay\Exception\SDKException as SDKException;
 use \USAePay\Exception\ueException as ueException;
 
 
-class Payment_methods{
+class Devices{
 
 	public function get($Data=array()){
-		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods get requires custkey");
-
-		$custkey=$Data["custkey"];
-		unset($Data["custkey"]);
-
-		$Path="/customers/$custkey/payment_methods";
+		$Path="/paymentengine/devices";
 		$Params=[];
 
-		if(array_key_exists("paymethod_key",$Data)){
-			$Path.='/'.$Data["paymethod_key"];
-			unset($Data["paymethod_key"]);
+		if(array_key_exists('limit',$Data)) $Params['limit']=$Data['limit'];
+		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];
+
+		if(array_key_exists("devicekey",$Data)){
+			$Path.='/'.$Data["devicekey"];
+			unset($Data["devicekey"]);
 		}
 
 		try{
@@ -40,12 +38,7 @@ class Payment_methods{
 	}
 
 	public function post($Data=array()){
-		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods post requires custkey");
-
-		$custkey=$Data["custkey"];
-		unset($Data["custkey"]);
-
-		$Path="/customers/$custkey/payment_methods";
+		$Path="/paymentengine/devices";
 		$Params=[];
 
 		try{
@@ -66,18 +59,14 @@ class Payment_methods{
 	}
 
 	public function delete($Data=array()){
-		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods delete requires custkey");
-			if(!array_key_exists("paymethod_key",$Data)) throw new SDKexception("Payment_methods delete requires paymethod_key");
+			if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Devices delete requires devicekey");
 
-		$custkey=$Data["custkey"];
-		unset($Data["custkey"]);
-
-		$Path="/customers/$custkey/payment_methods";
+		$Path="/paymentengine/devices";
 		$Params=[];
 
-		if(array_key_exists("paymethod_key",$Data)){
-			$Path.='/'.$Data["paymethod_key"];
-			unset($Data["paymethod_key"]);
+		if(array_key_exists("devicekey",$Data)){
+			$Path.='/'.$Data["devicekey"];
+			unset($Data["devicekey"]);
 		}
 
 		try{
@@ -98,18 +87,14 @@ class Payment_methods{
 	}
 
 	public function put($Data=array()){
-		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods put requires custkey");
-			if(!array_key_exists("paymethod_key",$Data)) throw new SDKexception("Payment_methods put requires paymethod_key");
+			if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Devices put requires devicekey");
 
-		$custkey=$Data["custkey"];
-		unset($Data["custkey"]);
-
-		$Path="/customers/$custkey/payment_methods";
+		$Path="/paymentengine/devices";
 		$Params=[];
 
-		if(array_key_exists("paymethod_key",$Data)){
-			$Path.='/'.$Data["paymethod_key"];
-			unset($Data["paymethod_key"]);
+		if(array_key_exists("devicekey",$Data)){
+			$Path.='/'.$Data["devicekey"];
+			unset($Data["devicekey"]);
 		}
 
 		try{

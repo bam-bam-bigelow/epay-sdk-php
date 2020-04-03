@@ -4,7 +4,7 @@
  * PHP version 5
  *
  * @category Class
- * @package  USAePay
+ * @package  AstroPayments
  * @author   CMcEwen
  */
 
@@ -13,10 +13,10 @@
  *
  * Mock handler for API calls
  *
- * Contact: 706@usaepay.com
+ * Contact: integrations@goastro.com
  */
 
-namespace USAePay;
+namespace AstroPayments;
 
 class MockHandler
 {

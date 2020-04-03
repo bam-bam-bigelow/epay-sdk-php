@@ -1,5 +1,5 @@
 <?php
-namespace USAePay\Exception;
+namespace AstroPayments\Exception;
 
 class ueException extends \Exception {
 	

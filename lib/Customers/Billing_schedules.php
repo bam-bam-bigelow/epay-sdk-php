@@ -1,9 +1,9 @@
 <?php
-namespace USAePay\Customers;
-use \USAePay\API as API;
-use \USAePay\Exception\CurlException as CurlException;
-use \USAePay\Exception\SDKException as SDKException;
-use \USAePay\Exception\ueException as ueException;
+namespace AstroPayments\Customers;
+use \AstroPayments\API as API;
+use \AstroPayments\Exception\CurlException as CurlException;
+use \AstroPayments\Exception\SDKException as SDKException;
+use \AstroPayments\Exception\ueException as ueException;
 
 
 class Billing_schedules{

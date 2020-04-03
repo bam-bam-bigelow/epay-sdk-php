@@ -1,4 +1,5 @@
-USAePay PHP SDK
+AstroPayments PHP SDK
+version 2.0.2
 
 ## Requirements
 
@@ -10,7 +11,7 @@ Composer
 
 ### Composer
 
-To install run `composer require usaepay/usaepay-php`
+To install run `composer require astropayments/astropayments-php`
 then run `composer install`
 
 Or clone git and run `composer install` within the project directory
@@ -29,13 +30,12 @@ After following installation instructions run the following:
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-USAePay\API::setAuthentication('Enter_API_Key_Here','Enter_API_Pin_Here');
+AstroPayments\API::setAuthentication('Enter_API_Key_Here','Enter_API_Pin_Here');
 
-$result=USAePay\Transactions::get();
+$result=AstroPayments\Transactions::get();
 ?>
 ```
 
 ## Author
 
-706@usaepay.com
-
+706@astropayments.com

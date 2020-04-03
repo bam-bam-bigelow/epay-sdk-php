@@ -1,5 +1,5 @@
 <?php
-namespace USAePay\Exception;
+namespace AstroPayments\Exception;
 
 class SDKException extends \Exception{
 

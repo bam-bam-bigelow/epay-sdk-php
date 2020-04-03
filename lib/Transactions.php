@@ -1,9 +1,9 @@
 <?php
-namespace USAePay;
-use \USAePay\API as API;
-use \USAePay\Exception\CurlException as CurlException;
-use \USAePay\Exception\SDKException as SDKException;
-use \USAePay\Exception\ueException as ueException;
+namespace AstroPayments;
+use \AstroPayments\API as API;
+use \AstroPayments\Exception\CurlException as CurlException;
+use \AstroPayments\Exception\SDKException as SDKException;
+use \AstroPayments\Exception\ueException as ueException;
 
 
 class Transactions{
@@ -15,6 +15,7 @@ class Transactions{
 		if(array_key_exists('limit',$Data)) $Params['limit']=$Data['limit'];
 		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];
 		if(array_key_exists('fuzzy',$Data)) $Params['fuzzy']=$Data['fuzzy'];
+		if(array_key_exists('filters',$Data)) $Params['filters']=$Data['filters'];
 
 		if(array_key_exists("trankey",$Data)){
 			$Path.='/'.$Data["trankey"];

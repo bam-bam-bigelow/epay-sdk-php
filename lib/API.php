@@ -4,7 +4,7 @@
  * PHP version 5
  *
  * @category Class
- * @package  USAePay
+ * @package  AstroPayments
  * @author   CMcEwen
  */
 
@@ -13,10 +13,10 @@
  *
  * Functions for handling general API settings and options
  *
- * Contact: 706@usaepay.com
+ * Contact: integrations@goastro.com
  */
 
-namespace USAePay;
+namespace AstroPayments;
 
 class API
 {
@@ -28,13 +28,13 @@ class API
   
   static $local_test=false;
   
-  static $subdomain='secure';
+  static $subdomain='api';
   
   static $high_availability=false;
   
   static $available_subdomains=['www-01','www-02','www-03','www-04'];
   
-  static $base_url='https://secure.usaepay.com/api/v2';
+  static $base_url='https://api.goastro.com/api/v2';
   
   static $password=false;
 
@@ -101,7 +101,7 @@ class API
         self::$available_subdomains=$up_subdomains;
 				return $return_data;
 			case 'sandbox':
-			case 'secure':
+			case 'api':
 			case 'www':
 			case 'www-01':
 			case 'www-02':
@@ -176,7 +176,7 @@ class API
           throw new Exception\SDKException("Unexpected Call Type");
       }
       try{
-        if(self::$local_test) $curl_response = \USAePay\MockHandler::mockCall($type,$service_url,($curl_post_data?$curl_post_data:'[]'));
+        if(self::$local_test) $curl_response = \AstroPayments\MockHandler::mockCall($type,$service_url,($curl_post_data?$curl_post_data:'[]'));
         else {
           $curl_response = curl_exec($curl);
           if(!$curl_response)throw new Exception\CurlException(curl_error($curl));

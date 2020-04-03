@@ -1,17 +1,17 @@
 {
-    "name":"astropayments/astropayments-php",
-    "description": "AstroPayments php sdk",
+    "name":"usaepay/usaepay-php",
+    "description": "USAePay php sdk",
     "keywords": [
-        "astropayments",
+        "usaepay",
         "payments",
         "creditcard"
     ],
-    "homepage": "https://api.goastro.com",
+    "homepage": "https://www.usaepay.com",
     "license": "MIT",
     "authors": [
         {
-            "name": "AstroPayments",
-            "homepage": "https://api.goastro.com"
+            "name": "USAePay",
+            "homepage": "https://www.usaepay.com"
         }
     ],
     "require": {
@@ -21,6 +21,6 @@
         "ext-mbstring": "*"
     },
     "autoload": {
-        "psr-4": { "AstroPayments\\" : "lib/" }
+        "psr-4": { "USAePay\\" : "lib/" }
     }
 }

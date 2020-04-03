@@ -1,5 +1,5 @@
 <?php
-namespace AstroPayments;
+namespace USAePay;
 
 class CurlException extends \Exception  {
 	

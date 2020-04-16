@@ -34,8 +34,6 @@ class API
   
   static $available_subdomains=['www-01','www-02','www-03','www-04'];
   
-  static $base_url='https://secure.usaepay.com/api/v2';
-  
   static $password=false;
 
 	static function setAuthentication($api_key, $api_pin) {
@@ -57,12 +55,10 @@ class API
   
   static function setEndpointKey($endpoint_key_value){
     self::$endpoint_key = $endpoint_key_value;
-    self::$base_url="https://".self::$subdomain.".usaepay.com/api/".self::$endpoint_key;
   }
   
   static function setSubdomain($subdomain_value){
     self::$subdomain = $subdomain_value;
-    self::$base_url="https://".self::$subdomain.".usaepay.com/api/".self::$endpoint_key;
   }
   
   static function ping($subdomain='all'){
@@ -140,7 +136,7 @@ class API
       throw new Exception\SDKException("Feature not yet available.");
     }
     else{
-      $service_url=self::$base_url.$path;
+      $service_url="https://".self::$subdomain.".usaepay.com/api/".self::$endpoint_key.$path;
       $headers = ['Content-type: application/json'];
       $curl = curl_init($service_url);
       curl_setopt($curl, CURLOPT_URL, $service_url);

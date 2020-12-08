@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Receipts{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("trankey",$Data)) throw new SDKexception("Receipts get requires trankey");
 
 		$trankey=$Data["trankey"];

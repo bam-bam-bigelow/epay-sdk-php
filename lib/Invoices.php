@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Invoices{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/invoices";
 		$Params=[];
 
@@ -37,7 +37,7 @@ class Invoices{
 		}
 	}
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		$Path="/invoices";
 		$Params=[];
 
@@ -58,7 +58,7 @@ class Invoices{
 		}
 	}
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 			if(!array_key_exists("invoice_key",$Data)) throw new SDKexception("Invoices delete requires invoice_key");
 
 		$Path="/invoices";
@@ -86,7 +86,7 @@ class Invoices{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 			if(!array_key_exists("invoice_key",$Data)) throw new SDKexception("Invoices put requires invoice_key");
 
 		$Path="/invoices";

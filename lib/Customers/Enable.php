@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Enable{
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		$Path="/customers/enable";
 		$Params=[];
 

@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Transactions{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/transactions";
 		$Params=[];
 
@@ -39,7 +39,7 @@ class Transactions{
 		}
 	}
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		$Path="/transactions";
 		$Params=[];
 

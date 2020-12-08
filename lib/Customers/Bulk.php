@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Bulk{
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 		$Path="/customers/bulk";
 		$Params=[];
 

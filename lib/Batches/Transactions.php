@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Transactions{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("batch_key",$Data)) throw new SDKexception("Transactions get requires batch_key");
 
 		$batch_key=$Data["batch_key"];

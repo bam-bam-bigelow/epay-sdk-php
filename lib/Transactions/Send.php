@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Send{
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		if(!array_key_exists("trankey",$Data)) throw new SDKexception("Send post requires trankey");
 
 		$trankey=$Data["trankey"];

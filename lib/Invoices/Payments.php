@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Payments{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("invoice_key",$Data)) throw new SDKexception("Payments get requires invoice_key");
 
 		$invoice_key=$Data["invoice_key"];

@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Defaults{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/invoices/defaults";
 		$Params=[];
 

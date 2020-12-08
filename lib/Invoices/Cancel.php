@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Cancel{
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		if(!array_key_exists("invoice_key",$Data)) throw new SDKexception("Cancel post requires invoice_key");
 
 		$invoice_key=$Data["invoice_key"];

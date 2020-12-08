@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Tokens{
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		$Path="/tokens";
 		$Params=[];
 
@@ -29,7 +29,7 @@ class Tokens{
 		}
 	}
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/tokens";
 		$Params=[];
 

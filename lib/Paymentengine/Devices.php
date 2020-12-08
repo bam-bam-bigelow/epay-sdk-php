@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Devices{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/paymentengine/devices";
 		$Params=[];
 
@@ -37,7 +37,7 @@ class Devices{
 		}
 	}
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		$Path="/paymentengine/devices";
 		$Params=[];
 
@@ -58,7 +58,7 @@ class Devices{
 		}
 	}
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 			if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Devices delete requires devicekey");
 
 		$Path="/paymentengine/devices";
@@ -86,7 +86,7 @@ class Devices{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 			if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Devices put requires devicekey");
 
 		$Path="/paymentengine/devices";

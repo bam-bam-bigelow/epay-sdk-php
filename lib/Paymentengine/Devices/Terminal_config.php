@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Terminal_config{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Terminal_config get requires devicekey");
 
 		$devicekey=$Data["devicekey"];
@@ -34,7 +34,7 @@ class Terminal_config{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Terminal_config put requires devicekey");
 
 		$devicekey=$Data["devicekey"];

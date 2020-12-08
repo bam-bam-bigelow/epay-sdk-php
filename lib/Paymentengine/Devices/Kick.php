@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Kick{
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Kick post requires devicekey");
 
 		$devicekey=$Data["devicekey"];

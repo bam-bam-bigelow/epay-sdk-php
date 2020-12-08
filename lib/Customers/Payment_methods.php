@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Payment_methods{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods get requires custkey");
 
 		$custkey=$Data["custkey"];
@@ -39,7 +39,7 @@ class Payment_methods{
 		}
 	}
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods post requires custkey");
 
 		$custkey=$Data["custkey"];
@@ -65,7 +65,7 @@ class Payment_methods{
 		}
 	}
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods delete requires custkey");
 			if(!array_key_exists("paymethod_key",$Data)) throw new SDKexception("Payment_methods delete requires paymethod_key");
 
@@ -97,7 +97,7 @@ class Payment_methods{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Payment_methods put requires custkey");
 			if(!array_key_exists("paymethod_key",$Data)) throw new SDKexception("Payment_methods put requires paymethod_key");
 

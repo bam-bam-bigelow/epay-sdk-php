@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Billing_schedules{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Billing_schedules get requires custkey");
 
 		$custkey=$Data["custkey"];
@@ -39,7 +39,7 @@ class Billing_schedules{
 		}
 	}
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Billing_schedules post requires custkey");
 
 		$custkey=$Data["custkey"];
@@ -65,7 +65,7 @@ class Billing_schedules{
 		}
 	}
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Billing_schedules delete requires custkey");
 			if(!array_key_exists("billing_schedule_key",$Data)) throw new SDKexception("Billing_schedules delete requires billing_schedule_key");
 
@@ -97,7 +97,7 @@ class Billing_schedules{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Billing_schedules put requires custkey");
 			if(!array_key_exists("billing_schedule_key",$Data)) throw new SDKexception("Billing_schedules put requires billing_schedule_key");
 

@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Settings{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Settings get requires devicekey");
 
 		$devicekey=$Data["devicekey"];
@@ -34,7 +34,7 @@ class Settings{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 		if(!array_key_exists("devicekey",$Data)) throw new SDKexception("Settings put requires devicekey");
 
 		$devicekey=$Data["devicekey"];

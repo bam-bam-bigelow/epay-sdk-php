@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Products{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/products";
 		$Params=[];
 
@@ -37,7 +37,7 @@ class Products{
 		}
 	}
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		$Path="/products";
 		$Params=[];
 
@@ -58,7 +58,7 @@ class Products{
 		}
 	}
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 			if(!array_key_exists("product_key",$Data)) throw new SDKexception("Products delete requires product_key");
 
 		$Path="/products";
@@ -86,7 +86,7 @@ class Products{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 			if(!array_key_exists("product_key",$Data)) throw new SDKexception("Products put requires product_key");
 
 		$Path="/products";

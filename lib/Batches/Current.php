@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Current{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/batches/current";
 		$Params=[];
 

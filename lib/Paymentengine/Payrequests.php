@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Payrequests{
 
-	public function post($Data=array()){
+	public static function post($Data=array()){
 		$Path="/paymentengine/payrequests";
 		$Params=[];
 
@@ -29,7 +29,7 @@ class Payrequests{
 		}
 	}
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/paymentengine/payrequests";
 		$Params=[];
 
@@ -55,7 +55,7 @@ class Payrequests{
 		}
 	}
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 			if(!array_key_exists("requestkey",$Data)) throw new SDKexception("Payrequests delete requires requestkey");
 
 		$Path="/paymentengine/payrequests";

@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Nextnum{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		$Path="/invoices/nextnum";
 		$Params=[];
 

@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Transactions{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Transactions get requires custkey");
 
 		$custkey=$Data["custkey"];

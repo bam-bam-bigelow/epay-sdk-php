@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Bulk{
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Bulk delete requires custkey");
 		if(!array_key_exists("billing_schedule_key",$Data)) throw new SDKexception("Bulk delete requires billing_schedule_key");
 

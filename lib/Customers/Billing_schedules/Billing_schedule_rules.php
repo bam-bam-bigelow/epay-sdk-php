@@ -8,7 +8,7 @@ use \USAePay\Exception\ueException as ueException;
 
 class Billing_schedule_rules{
 
-	public function get($Data=array()){
+	public static function get($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Billing_schedule_rules get requires custkey");
 		if(!array_key_exists("billing_schedule_key",$Data)) throw new SDKexception("Billing_schedule_rules get requires billing_schedule_key");
 
@@ -42,7 +42,7 @@ class Billing_schedule_rules{
 		}
 	}
 
-	public function delete($Data=array()){
+	public static function delete($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Billing_schedule_rules delete requires custkey");
 		if(!array_key_exists("billing_schedule_key",$Data)) throw new SDKexception("Billing_schedule_rules delete requires billing_schedule_key");
 			if(!array_key_exists("billing_rule_key",$Data)) throw new SDKexception("Billing_schedule_rules delete requires billing_rule_key");
@@ -77,7 +77,7 @@ class Billing_schedule_rules{
 		}
 	}
 
-	public function put($Data=array()){
+	public static function put($Data=array()){
 		if(!array_key_exists("custkey",$Data)) throw new SDKexception("Billing_schedule_rules put requires custkey");
 		if(!array_key_exists("billing_schedule_key",$Data)) throw new SDKexception("Billing_schedule_rules put requires billing_schedule_key");
 			if(!array_key_exists("billing_rule_key",$Data)) throw new SDKexception("Billing_schedule_rules put requires billing_rule_key");

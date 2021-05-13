@@ -9,6 +9,7 @@ use \USAePay\Exception\ueException as ueException;
 class Transactions{
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/transactions";
 		$Params=[];
 
@@ -23,7 +24,7 @@ class Transactions{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -40,11 +41,12 @@ class Transactions{
 	}
 
 	public static function post($Data=array()){
+		$Response_type="json";
 		$Path="/transactions";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

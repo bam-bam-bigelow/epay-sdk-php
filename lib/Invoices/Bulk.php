@@ -9,11 +9,12 @@ use \USAePay\Exception\ueException as ueException;
 class Bulk{
 
 	public static function delete($Data=array()){
+		$Response_type="json";
 		$Path="/invoices/bulk";
 		$Params=[];
 
 		try{
-			return API::runCall('delete',$Path,$Data,$Params);
+			return API::runCall('delete',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

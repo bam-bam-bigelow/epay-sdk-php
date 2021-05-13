@@ -9,6 +9,7 @@ use \USAePay\Exception\ueException as ueException;
 class Invoices{
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/invoices";
 		$Params=[];
 
@@ -21,7 +22,7 @@ class Invoices{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -38,11 +39,12 @@ class Invoices{
 	}
 
 	public static function post($Data=array()){
+		$Response_type="json";
 		$Path="/invoices";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -61,6 +63,7 @@ class Invoices{
 	public static function delete($Data=array()){
 			if(!array_key_exists("invoice_key",$Data)) throw new SDKexception("Invoices delete requires invoice_key");
 
+		$Response_type="json";
 		$Path="/invoices";
 		$Params=[];
 
@@ -70,7 +73,7 @@ class Invoices{
 		}
 
 		try{
-			return API::runCall('delete',$Path,$Data,$Params);
+			return API::runCall('delete',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -89,6 +92,7 @@ class Invoices{
 	public static function put($Data=array()){
 			if(!array_key_exists("invoice_key",$Data)) throw new SDKexception("Invoices put requires invoice_key");
 
+		$Response_type="json";
 		$Path="/invoices";
 		$Params=[];
 
@@ -98,7 +102,7 @@ class Invoices{
 		}
 
 		try{
-			return API::runCall('put',$Path,$Data,$Params);
+			return API::runCall('put',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

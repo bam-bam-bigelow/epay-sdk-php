@@ -9,6 +9,7 @@ use \USAePay\Exception\ueException as ueException;
 class Batches{
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/batches";
 		$Params=[];
 
@@ -29,7 +30,7 @@ class Batches{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

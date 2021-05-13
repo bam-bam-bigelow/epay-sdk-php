@@ -14,11 +14,12 @@ class Kick{
 		$devicekey=$Data["devicekey"];
 		unset($Data["devicekey"]);
 
+		$Response_type="json";
 		$Path="/paymentengine/devices/$devicekey/kick";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

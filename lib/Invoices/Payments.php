@@ -14,6 +14,7 @@ class Payments{
 		$invoice_key=$Data["invoice_key"];
 		unset($Data["invoice_key"]);
 
+		$Response_type="json";
 		$Path="/invoices/$invoice_key/payments";
 		$Params=[];
 
@@ -21,7 +22,7 @@ class Payments{
 		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

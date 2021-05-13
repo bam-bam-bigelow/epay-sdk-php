@@ -14,6 +14,7 @@ class Transactions{
 		$batch_key=$Data["batch_key"];
 		unset($Data["batch_key"]);
 
+		$Response_type="json";
 		$Path="/batches/$batch_key/transactions";
 		$Params=[];
 
@@ -22,7 +23,7 @@ class Transactions{
 		if(array_key_exists('return_bin',$Data)) $Params['return_bin']=$Data['return_bin'];
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

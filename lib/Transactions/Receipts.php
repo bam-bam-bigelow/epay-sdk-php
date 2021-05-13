@@ -9,11 +9,14 @@ use \USAePay\Exception\ueException as ueException;
 class Receipts{
 
 	public static function get($Data=array()){
+		if(!array_key_exists('receipt_key',$Data)) $Data['receipt_key']='vterm';
+
 		if(!array_key_exists("trankey",$Data)) throw new SDKexception("Receipts get requires trankey");
 
 		$trankey=$Data["trankey"];
 		unset($Data["trankey"]);
 
+		$Response_type="base64";
 		$Path="/transactions/$trankey/receipts";
 		$Params=[];
 
@@ -23,7 +26,7 @@ class Receipts{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

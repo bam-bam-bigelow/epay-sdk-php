@@ -9,6 +9,7 @@ use \USAePay\Exception\ueException as ueException;
 class Customers{
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/customers";
 		$Params=[];
 
@@ -21,7 +22,7 @@ class Customers{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -38,11 +39,12 @@ class Customers{
 	}
 
 	public static function post($Data=array()){
+		$Response_type="json";
 		$Path="/customers";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -61,6 +63,7 @@ class Customers{
 	public static function delete($Data=array()){
 			if(!array_key_exists("custkey",$Data)) throw new SDKexception("Customers delete requires custkey");
 
+		$Response_type="json";
 		$Path="/customers";
 		$Params=[];
 
@@ -70,7 +73,7 @@ class Customers{
 		}
 
 		try{
-			return API::runCall('delete',$Path,$Data,$Params);
+			return API::runCall('delete',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -89,6 +92,7 @@ class Customers{
 	public static function put($Data=array()){
 			if(!array_key_exists("custkey",$Data)) throw new SDKexception("Customers put requires custkey");
 
+		$Response_type="json";
 		$Path="/customers";
 		$Params=[];
 
@@ -98,7 +102,7 @@ class Customers{
 		}
 
 		try{
-			return API::runCall('put',$Path,$Data,$Params);
+			return API::runCall('put',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

@@ -14,11 +14,12 @@ class Send{
 		$trankey=$Data["trankey"];
 		unset($Data["trankey"]);
 
+		$Response_type="json";
 		$Path="/transactions/$trankey/send";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

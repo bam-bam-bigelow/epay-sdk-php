@@ -9,6 +9,7 @@ use \USAePay\Exception\ueException as ueException;
 class Transactions{
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/batches/current/transactions";
 		$Params=[];
 
@@ -17,7 +18,7 @@ class Transactions{
 		if(array_key_exists('return_bin',$Data)) $Params['return_bin']=$Data['return_bin'];
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

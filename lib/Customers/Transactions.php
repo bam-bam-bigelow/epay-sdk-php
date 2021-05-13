@@ -14,11 +14,12 @@ class Transactions{
 		$custkey=$Data["custkey"];
 		unset($Data["custkey"]);
 
+		$Response_type="json";
 		$Path="/customers/$custkey/transactions";
 		$Params=[];
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

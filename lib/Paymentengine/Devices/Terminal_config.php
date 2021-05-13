@@ -14,11 +14,12 @@ class Terminal_config{
 		$devicekey=$Data["devicekey"];
 		unset($Data["devicekey"]);
 
+		$Response_type="json";
 		$Path="/paymentengine/devices/$devicekey/terminal-config";
 		$Params=[];
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -40,11 +41,12 @@ class Terminal_config{
 		$devicekey=$Data["devicekey"];
 		unset($Data["devicekey"]);
 
+		$Response_type="json";
 		$Path="/paymentengine/devices/$devicekey/terminal-config";
 		$Params=[];
 
 		try{
-			return API::runCall('put',$Path,$Data,$Params);
+			return API::runCall('put',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

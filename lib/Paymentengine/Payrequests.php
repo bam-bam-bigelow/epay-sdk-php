@@ -9,11 +9,12 @@ use \USAePay\Exception\ueException as ueException;
 class Payrequests{
 
 	public static function post($Data=array()){
+		$Response_type="json";
 		$Path="/paymentengine/payrequests";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -30,6 +31,7 @@ class Payrequests{
 	}
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/paymentengine/payrequests";
 		$Params=[];
 
@@ -39,7 +41,7 @@ class Payrequests{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -58,6 +60,7 @@ class Payrequests{
 	public static function delete($Data=array()){
 			if(!array_key_exists("requestkey",$Data)) throw new SDKexception("Payrequests delete requires requestkey");
 
+		$Response_type="json";
 		$Path="/paymentengine/payrequests";
 		$Params=[];
 
@@ -67,7 +70,7 @@ class Payrequests{
 		}
 
 		try{
-			return API::runCall('delete',$Path,$Data,$Params);
+			return API::runCall('delete',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

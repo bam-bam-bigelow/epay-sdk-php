@@ -9,6 +9,7 @@ use \USAePay\Exception\ueException as ueException;
 class Products{
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/products";
 		$Params=[];
 
@@ -21,7 +22,7 @@ class Products{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -38,11 +39,12 @@ class Products{
 	}
 
 	public static function post($Data=array()){
+		$Response_type="json";
 		$Path="/products";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -61,6 +63,7 @@ class Products{
 	public static function delete($Data=array()){
 			if(!array_key_exists("product_key",$Data)) throw new SDKexception("Products delete requires product_key");
 
+		$Response_type="json";
 		$Path="/products";
 		$Params=[];
 
@@ -70,7 +73,7 @@ class Products{
 		}
 
 		try{
-			return API::runCall('delete',$Path,$Data,$Params);
+			return API::runCall('delete',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -89,6 +92,7 @@ class Products{
 	public static function put($Data=array()){
 			if(!array_key_exists("product_key",$Data)) throw new SDKexception("Products put requires product_key");
 
+		$Response_type="json";
 		$Path="/products";
 		$Params=[];
 
@@ -98,7 +102,7 @@ class Products{
 		}
 
 		try{
-			return API::runCall('put',$Path,$Data,$Params);
+			return API::runCall('put',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

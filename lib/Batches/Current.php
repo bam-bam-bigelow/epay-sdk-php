@@ -9,11 +9,12 @@ use \USAePay\Exception\ueException as ueException;
 class Current{
 
 	public static function get($Data=array()){
+		$Response_type="json";
 		$Path="/batches/current";
 		$Params=[];
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

@@ -14,6 +14,7 @@ class Payment_methods{
 		$custkey=$Data["custkey"];
 		unset($Data["custkey"]);
 
+		$Response_type="json";
 		$Path="/customers/$custkey/payment_methods";
 		$Params=[];
 
@@ -23,7 +24,7 @@ class Payment_methods{
 		}
 
 		try{
-			return API::runCall('get',$Path,$Data,$Params);
+			return API::runCall('get',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -45,11 +46,12 @@ class Payment_methods{
 		$custkey=$Data["custkey"];
 		unset($Data["custkey"]);
 
+		$Response_type="json";
 		$Path="/customers/$custkey/payment_methods";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -72,6 +74,7 @@ class Payment_methods{
 		$custkey=$Data["custkey"];
 		unset($Data["custkey"]);
 
+		$Response_type="json";
 		$Path="/customers/$custkey/payment_methods";
 		$Params=[];
 
@@ -81,7 +84,7 @@ class Payment_methods{
 		}
 
 		try{
-			return API::runCall('delete',$Path,$Data,$Params);
+			return API::runCall('delete',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;
@@ -104,6 +107,7 @@ class Payment_methods{
 		$custkey=$Data["custkey"];
 		unset($Data["custkey"]);
 
+		$Response_type="json";
 		$Path="/customers/$custkey/payment_methods";
 		$Params=[];
 
@@ -113,7 +117,7 @@ class Payment_methods{
 		}
 
 		try{
-			return API::runCall('put',$Path,$Data,$Params);
+			return API::runCall('put',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

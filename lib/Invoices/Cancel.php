@@ -14,11 +14,12 @@ class Cancel{
 		$invoice_key=$Data["invoice_key"];
 		unset($Data["invoice_key"]);
 
+		$Response_type="json";
 		$Path="/invoices/$invoice_key/cancel";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

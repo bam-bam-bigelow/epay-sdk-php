@@ -14,11 +14,12 @@ class Confirm{
 		$requestkey=$Data["requestkey"];
 		unset($Data["requestkey"]);
 
+		$Response_type="json";
 		$Path="/paymentengine/payrequests/$requestkey/confirm";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

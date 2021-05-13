@@ -9,11 +9,12 @@ use \USAePay\Exception\ueException as ueException;
 class Enable{
 
 	public static function post($Data=array()){
+		$Response_type="json";
 		$Path="/customers/enable";
 		$Params=[];
 
 		try{
-			return API::runCall('post',$Path,$Data,$Params);
+			return API::runCall('post',$Path,$Data,$Params,$Response_type);
 		}
 		catch(CurlException $e){
 			throw $e;

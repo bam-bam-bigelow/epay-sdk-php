@@ -121,7 +121,7 @@ class API
 		}
 	}
 
-	static function runCall($type,$path,$data=false,$params=false){
+	static function runCall($type,$path,$data=false,$params=false,$return_type='json'){
 		if(!self::$password) throw new Exception\SDKException("Please set api key and pin with setAuthentication before attempting other calls.");
 		if($data) $curl_post_data=json_encode($data);
 		$first=true;
@@ -176,9 +176,19 @@ class API
 					$curl_response = curl_exec($curl);
 					if(!$curl_response)throw new Exception\CurlException(curl_error($curl));
 				}
-				$response = json_decode($curl_response);
-				if(is_object($response)){
-					if(property_exists($response,"error")&&(!property_exists($response,"result")||$response->result=="error"))throw new Exception\ueException($response->error,$response->errorcode);
+				switch ($return_type) {
+					case 'string':
+					case 'json':
+						$response = json_decode($curl_response);
+						if(is_object($response)){
+							if(property_exists($response,"error")&&(!property_exists($response,"result")||$response->result=="error"))throw new Exception\ueException($response->error,$response->errorcode);
+						}
+						break;
+					case 'base64':
+						$response = base64_decode($curl_response);
+						break;
+					default:
+						throw new Exception\SDKException("Unexpected Return Type");
 				}
 				return $response;
 			}

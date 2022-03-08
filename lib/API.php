@@ -124,6 +124,7 @@ class API
 	static function runCall($type,$path,$data=false,$params=false,$return_type='json'){
 		if(!self::$password) throw new Exception\SDKException("Please set api key and pin with setAuthentication before attempting other calls.");
 		if($data) $curl_post_data=json_encode($data);
+		else $curl_post_data = '[]';
 		$first=true;
 		if($params&&count($params)>0){
 			foreach($params as $name=>$value){
@@ -171,7 +172,7 @@ class API
 					throw new Exception\SDKException("Unexpected Call Type");
 			}
 			try{
-				if(self::$local_test) $curl_response = \USAePay\MockHandler::mockCall($type,$service_url,($curl_post_data?$curl_post_data:'[]'));
+				if(self::$local_test) $curl_response = \USAePay\MockHandler::mockCall($type,$service_url,$curl_post_data);
 				else {
 					$curl_response = curl_exec($curl);
 					if(!$curl_response)throw new Exception\CurlException(curl_error($curl));

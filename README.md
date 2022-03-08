@@ -1,5 +1,5 @@
 USAePay PHP SDK
-version 2.1.2
+version 2.1.4
 
 ## Requirements
 

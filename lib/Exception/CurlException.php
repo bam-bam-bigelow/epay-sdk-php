@@ -1,5 +1,5 @@
 <?php
-namespace USAePay;
+namespace USAePay\Exception;
 
 class CurlException extends \Exception  {
 	

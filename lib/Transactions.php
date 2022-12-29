@@ -13,6 +13,10 @@ class Transactions{
 		$Path="/transactions";
 		$Params=[];
 
+		if(array_key_exists('return_origin',$Data)) $Params['return_origin']=$Data['return_origin'];
+		if(array_key_exists('return_bin',$Data)) $Params['return_bin']=$Data['return_bin'];
+		if(array_key_exists('return_fraud',$Data)) $Params['return_fraud']=$Data['return_fraud'];
+
 		if(array_key_exists('limit',$Data)) $Params['limit']=$Data['limit'];
 		if(array_key_exists('offset',$Data)) $Params['offset']=$Data['offset'];
 		if(array_key_exists('fuzzy',$Data)) $Params['fuzzy']=$Data['fuzzy'];

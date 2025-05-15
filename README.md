@@ -36,3 +36,4 @@ $result=USAePay\Transactions::get();
 ?>
 ```
 
+Documentation is here https://help.usaepay.info/api/rest/#introduction

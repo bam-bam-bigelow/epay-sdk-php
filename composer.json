@@ -1,26 +1,28 @@
 {
-		"name":"usaepay/usaepay-php",
-		"description": "USAePay php sdk",
-		"keywords": [
-				"usaepay",
-				"payments",
-				"creditcard"
-		],
-		"homepage": "https://www.usaepay.com",
-		"license": "MIT",
-		"authors": [
-				{
-						"name": "USAePay",
-						"homepage": "https://www.usaepay.com"
-				}
-		],
-		"require": {
-				"php": "^7.0||^8.0",
-				"ext-curl": "*",
-				"ext-json": "*",
-				"ext-mbstring": "*"
-		},
-		"autoload": {
-				"psr-4": { "USAePay\\" : "lib/" }
-		}
+  "name": "bam-bam-bigelow/epay-sdk-php",
+  "description": "USAePay php sdk",
+  "keywords": [
+    "usaepay",
+    "payments",
+    "creditcard"
+  ],
+  "homepage": "https://www.usaepay.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "USAePay",
+      "homepage": "https://www.usaepay.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "USAePay\\": "lib/"
+    }
+  }
 }

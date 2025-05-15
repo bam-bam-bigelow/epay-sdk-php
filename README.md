@@ -3,7 +3,7 @@ version 2.1.6
 
 ## Requirements
 
-PHP 5.5 and later
+PHP 8.1 and later
 
 Composer
 
@@ -11,7 +11,7 @@ Composer
 
 ### Composer
 
-To install run `composer require usaepay/usaepay-php`
+To install run `composer require bam-bam-bigelow/epay-sdk-php`
 then run `composer install`
 
 Or clone git and run `composer install` within the project directory
@@ -36,6 +36,3 @@ $result=USAePay\Transactions::get();
 ?>
 ```
 
-## Author
-
-706@usaepay.com

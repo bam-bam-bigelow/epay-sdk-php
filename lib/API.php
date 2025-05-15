@@ -1,79 +1,90 @@
 <?php
-/**
-	* Configuration
-	* PHP version 5
-	*
-	* @category Class
-	* @package	USAePay
-	* @author   USAePay
-	*/
-/**
-	* API
-	*
-	* Functions for handling general API settings and options
-	*
-	* Contact: 706@usaepay.com
-	*/
+
+declare(strict_types=1);
 
 namespace USAePay;
 
+use Exception;
+use USAePay\Exception\CurlException;
+use USAePay\Exception\SDKException;
+use USAePay\Exception\ueException;
+
 class API
 {
+	public static int $timeout = 45;
 
+	public static string $endpoint_key = 'v2';
 
-	static $timeout='45';
+	public static bool $local_test = false;
 
-	static $endpoint_key='v2';
+	public static string $subdomain = 'secure';
 
-	static $local_test=false;
+	public static bool $high_availability = false;
 
-	static $subdomain='secure';
+	public static array $available_subdomains = [
+		'www-01',
+		'www-02',
+		'www-03',
+		'www-04',
+	];
 
-	static $high_availability=false;
+	public static string|null $password = null;
+	private static string|null $proxy = null;
 
-	static $available_subdomains=['www-01','www-02','www-03','www-04'];
-
-	static $password=false;
-
-	static function setAuthentication($api_key, $api_pin) {
+	public static function setAuthentication(string $api_key, string $api_pin): void {
 		/// Configure authorization:
-		$seed=substr(hash('sha256',rand()),10,25);
-		$clear= $api_key . $seed . $api_pin;
-		$hash="s2/".$seed."/".hash('sha256',$clear);
-		self::$password="$api_key:$hash";
+		$seed = substr(hash('sha256', (string)mt_rand()), 10, 25);
+		$clear = $api_key . $seed . $api_pin;
+		$hash = "s2/" . $seed . "/" . hash('sha256', $clear);
+		self::$password = "$api_key:$hash";
 	}
 
-	static function testLocally($local=True){
+	public static function testLocally(bool $local = true): void {
 		self::$local_test = $local;
 	}
 
-	static function setTimeOut($timeout_value){
-		if($timeout_value>60||$timeout_value<1) throw new Exception\SDKException("Invalid timeout value, please pick a value between 0-60.");
+	/**
+	 * @throws SDKException
+	 */
+	public static function setTimeOut(int $timeout_value): void {
+		if ($timeout_value > 60 || $timeout_value < 1) {
+			throw new SDKException("Invalid timeout value, please pick a value between 0-60.");
+		}
 		self::$timeout = $timeout_value;
 	}
 
-	static function setEndpointKey($endpoint_key_value){
+	public static function setEndpointKey(string $endpoint_key_value): void {
 		self::$endpoint_key = $endpoint_key_value;
 	}
 
-	static function setSubdomain($subdomain_value){
+	public static function setSubdomain(string $subdomain_value): void {
 		self::$subdomain = $subdomain_value;
 	}
 
-	static function ping($subdomain='all'){
-		switch($subdomain){
+	/**
+	 * @throws CurlException
+	 * @throws SDKException
+	 */
+	public static function ping(string $subdomain = 'all'): array {
+		switch ($subdomain) {
 			case 'all':
-				$subdomains=['www-01','www-02','www-03','www-04'];
-				$mh=curl_multi_init();
-				foreach($subdomains as $subdomain){
-					$url='https://'.$subdomain.'.usaepay.com/ping';
-					$curl_handles[$subdomain]=array(
-						'handle'=>curl_init($url),
-						'subdomain'=>$subdomain
-					);
-					curl_setopt($curl_handles[$subdomain]['handle'], CURLOPT_URL,$url);
-					curl_setopt($curl_handles[$subdomain]['handle'], CURLOPT_RETURNTRANSFER, true);
-					curl_multi_add_handle($mh,$curl_handles[$subdomain]['handle']);
+				$subdomains = [
+					'www-01',
+					'www-02',
+					'www-03',
+					'www-04',
+				];
+				$mh = curl_multi_init();
+
+				foreach ($subdomains as $subdomainInLoop) {
+					$url = 'https://' . $subdomainInLoop . '.usaepay.com/ping';
+					$curl_handles[$subdomainInLoop] = [
+						'handle' => curl_init($url),
+						'subdomain' => $subdomainInLoop,
+					];
+					curl_setopt($curl_handles[$subdomainInLoop]['handle'], CURLOPT_URL, $url);
+					curl_setopt($curl_handles[$subdomainInLoop]['handle'], CURLOPT_RETURNTRANSFER, true);
+					curl_multi_add_handle($mh, $curl_handles[$subdomainInLoop]['handle']);
 				}
 
 				do {
@@ -82,18 +93,21 @@ class API
 						curl_multi_select($mh);
 					}
 				} while ($active && $status == CURLM_OK);
-				$up_subdomains=array();
-				foreach($curl_handles as $handle){
+				$up_subdomains = [];
+				foreach ($curl_handles as $handle) {
 					$extra_info = curl_getinfo($handle['handle']);
 					$response = curl_multi_getcontent($handle['handle']);
-					if(substr($response,0,2)=='UP') $up_subdomains[]=$handle['subdomain'];
-					$return_data[] = array(
-						'subdomain'=>$handle['subdomain'],
-						'status'=>(substr($response,0,2)=='UP'?'UP':'DOWN'),
-						'total_call_time'=>$extra_info['total_time']
-					);
+					if (str_starts_with($response, 'UP')) {
+						$up_subdomains[] = $handle['subdomain'];
+					}
+					$return_data[] = [
+						'subdomain' => $handle['subdomain'],
+						'status' => (str_starts_with($response, 'UP') ? 'UP' : 'DOWN'),
+						'total_call_time' => $extra_info['total_time'],
+					];
 				}
-				self::$available_subdomains=$up_subdomains;
+				self::$available_subdomains = $up_subdomains;
+
 				return $return_data;
 			case 'sandbox':
 			case 'secure':
@@ -102,102 +116,132 @@ class API
 			case 'www-02':
 			case 'www-03':
 			case 'www-04':
-				$baseURL = 'https://'.$subdomain.'.usaepay.com/ping';
+				$baseURL = 'https://' . $subdomain . '.usaepay.com/ping';
 				$curl = curl_init($baseURL);
 				curl_setopt($curl, CURLOPT_URL, $baseURL);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				$curl_response = curl_exec($curl);
-				if(!$curl_response)throw new Exception\CurlException(curl_error($curl));
-				$extra_info=curl_getinfo($curl);
+				if (!$curl_response) {
+					throw new CurlException(curl_error($curl));
+				}
+				$extra_info = curl_getinfo($curl);
 				curl_close($curl);
-				$status=array(
-					'subdomain'=>$subdomain,
-					'status'=>(substr($curl_response,0,2)=='UP'?'UP':'DOWN'),
-					'total_call_time'=>$extra_info['total_time']
-				);
-				return $status;
+
+				return [
+					'subdomain' => $subdomain,
+					'status' => (str_starts_with($curl_response, 'UP') ? 'UP' : 'DOWN'),
+					'total_call_time' => $extra_info['total_time'],
+				];
 			default:
-				throw new Exception\SDKException("Subdomain Not Found, Please check our high availability documentation.");
+				throw new SDKException("Subdomain Not Found, Please check our high availability documentation.");
 		}
 	}
 
-	static function runCall($type,$path,$data=false,$params=false,$return_type='json'){
-		if(!self::$password) throw new Exception\SDKException("Please set api key and pin with setAuthentication before attempting other calls.");
-		if($data) $curl_post_data=json_encode($data);
-		else $curl_post_data = '[]';
-		$first=true;
-		if($params&&count($params)>0){
-			foreach($params as $name=>$value){
-				$path.=($first?'?':'&').$name.'='.$value;
-				$first=false;
+	/**
+	 * @throws SDKException
+	 */
+	public static function runCall(
+		string     $type,
+		string     $path,
+		array|null $data = null,
+		array|null $params = null,
+		string     $return_type = 'json'
+	) {
+		if (!self::$password) {
+			throw new SDKException("Please set api key and pin with setAuthentication before attempting other calls.");
+		}
+		if ($data) {
+			$curl_post_data = json_encode($data);
+		}
+		else {
+			$curl_post_data = '[]';
+		}
+		$first = true;
+		if ($params && count($params) > 0) {
+			foreach ($params as $name => $value) {
+				$path .= ($first ? '?' : '&') . $name . '=' . $value;
+				$first = false;
 			}
 		}
-		if(self::$high_availability){
-			throw new Exception\SDKException("Feature not yet available.");
+		if (self::$high_availability) {
+			throw new SDKException("Feature not yet available.");
 		}
-		else{
-			$service_url="https://".self::$subdomain.".usaepay.com/api/".self::$endpoint_key.$path;
-			$headers = ['Content-type: application/json'];
-			$curl = curl_init($service_url);
-			curl_setopt($curl, CURLOPT_URL, $service_url);
-			curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-			curl_setopt($curl, CURLOPT_USERPWD, self::$password);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-			curl_setopt($curl, CURLOPT_TIMEOUT, self::$timeout);
 
-			switch($type){
-				case 'post':
-					curl_setopt($curl, CURLOPT_POST, true);
-					curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
-					break;
+		$service_url = "https://" . self::$subdomain . ".usaepay.com/api/" . self::$endpoint_key . $path;
+		$headers = ['Content-type: application/json'];
+		$curl = curl_init($service_url);
+		curl_setopt($curl, CURLOPT_URL, $service_url);
+		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		curl_setopt($curl, CURLOPT_USERPWD, self::$password);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_TIMEOUT, self::$timeout);
 
-				case 'get':
-					curl_setopt($curl, CURLOPT_POST, false);
-					break;
+		if (self::$proxy) {
+			curl_setopt($curl, CURLOPT_PROXY, self::$proxy);
+		}
 
-				case 'delete':
-					curl_setopt($curl, CURLOPT_POST, true);
-					curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-					curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
-					break;
+		switch ($type) {
+			case 'post':
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+				break;
 
-				case 'put':
-					curl_setopt($curl, CURLOPT_POST, true);
-					curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-					curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
-					break;
+			case 'get':
+				curl_setopt($curl, CURLOPT_POST, false);
+				break;
 
-				default:
-					throw new Exception\SDKException("Unexpected Call Type");
+			case 'delete':
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+				break;
+
+			case 'put':
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+				break;
+
+			default:
+				throw new SDKException("Unexpected Call Type");
+		}
+		try {
+			if (self::$local_test) {
+				$curl_response = \USAePay\MockHandler::mockCall($type, $service_url, $curl_post_data);
 			}
-			try{
-				if(self::$local_test) $curl_response = \USAePay\MockHandler::mockCall($type,$service_url,$curl_post_data);
-				else {
-					$curl_response = curl_exec($curl);
-					if(!$curl_response)throw new Exception\CurlException(curl_error($curl));
+			else {
+				$curl_response = curl_exec($curl);
+				if (!$curl_response) {
+					throw new CurlException(curl_error($curl));
 				}
-				switch ($return_type) {
-					case 'string':
-					case 'json':
-						$response = json_decode($curl_response);
-						if(is_object($response)){
-							if(property_exists($response,"error")&&(!property_exists($response,"result")||$response->result=="error"))throw new Exception\ueException($response->error,$response->errorcode);
+			}
+			switch ($return_type) {
+				case 'string':
+				case 'json':
+					$response = json_decode($curl_response);
+					if (is_object($response)) {
+						if (property_exists($response, "error")
+							&& (!property_exists($response, "result")
+								|| $response->result === "error")) {
+							throw new ueException($response->error, $response->errorcode);
 						}
-						break;
-					case 'base64':
-						$response = base64_decode($curl_response);
-						break;
-					default:
-						throw new Exception\SDKException("Unexpected Return Type");
-				}
-				return $response;
+					}
+					break;
+				case 'base64':
+					$response = base64_decode($curl_response);
+					break;
+				default:
+					throw new SDKException("Unexpected Return Type");
 			}
 
-			catch(Exception $e){
-				$error_msg = curl_error($curl);
-				return $error_msg;
-			}
+			return $response;
+		} catch (Exception $e) {
+			return curl_error($curl);
 		}
+	}
+
+	public static function setProxy(?string $proxy): void {
+		self::$proxy = $proxy;
 	}
 }

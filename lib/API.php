@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace USAePay;
 
 use Exception;
+use USAePay\Dto\Response\BatchesList;
+use USAePay\Dto\Response\Error;
 use USAePay\Exception\CurlException;
 use USAePay\Exception\SDKException;
-use USAePay\Exception\ueException;
+use USAePay\Interface\ResponseInterface;
 
 class API
 {
@@ -144,9 +146,8 @@ class API
 		string     $type,
 		string     $path,
 		array|null $data = null,
-		array|null $params = null,
-		string     $return_type = 'json'
-	) {
+		array|null $params = null
+	): ResponseInterface {
 		if (!self::$password) {
 			throw new SDKException("Please set api key and pin with setAuthentication before attempting other calls.");
 		}
@@ -206,6 +207,7 @@ class API
 			default:
 				throw new SDKException("Unexpected Call Type");
 		}
+
 		try {
 			if (self::$local_test) {
 				$curl_response = \USAePay\MockHandler::mockCall($type, $service_url, $curl_post_data);
@@ -213,35 +215,46 @@ class API
 			else {
 				$curl_response = curl_exec($curl);
 				if (!$curl_response) {
-					throw new CurlException(curl_error($curl));
+					return new Error(curl_error($curl));
 				}
 			}
-			switch ($return_type) {
-				case 'string':
-				case 'json':
-					$response = json_decode($curl_response);
-					if (is_object($response)) {
-						if (property_exists($response, "error")
-							&& (!property_exists($response, "result")
-								|| $response->result === "error")) {
-							throw new ueException($response->error, $response->errorcode);
-						}
-					}
-					break;
-				case 'base64':
-					$response = base64_decode($curl_response);
-					break;
-				default:
-					throw new SDKException("Unexpected Return Type");
+
+			$response = (array)json_decode($curl_response, true);
+			if (isset($response['error'])
+				|| isset($response['errorcode'])
+				|| ($response['result'] ?? '') === "error") {
+				return new Error(json_encode($response));
 			}
 
-			return $response;
+			switch ($response['type']) {
+				case 'list':
+					return new BatchesList($response);
+				default:
+					throw new SDKException("Unexpected Call Type");
+			}
 		} catch (Exception $e) {
-			return curl_error($curl);
+			return new Error($e->getMessage());
 		}
 	}
 
 	public static function setProxy(?string $proxy): void {
 		self::$proxy = $proxy;
+	}
+
+	public static function transformArray(mixed $data, string $class): mixed {
+		if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				if (is_object($value)) {
+					$data[$key] = self::transformArray($value, $class);
+				}
+				else {
+					$data[$key] = new $class($value);
+				}
+			}
+
+			return $data;
+		}
+
+		return new $class($data);
 	}
 }

@@ -52,7 +52,7 @@ class Batches
 		try {
 			$response = API::runCall('get', $Path, $Data, $Params);
 			if (!is_object($response)) {
-				throw new SDKException("Unexpected response type");
+				throw new SDKException("Unexpected response type 55: " . gettype($response));
 			}
 
 			return $response;

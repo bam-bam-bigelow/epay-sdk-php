@@ -1,0 +1,17 @@
+{
+  "key": "3gtt10gynet18xo",
+  "type": "batch",
+  "batchrefnum": "1234567890",
+  "sequence": "60",
+  "parent_sequence": null,
+  "opened": "2024-12-19 06:14:44",
+  "closed": "2024-12-19 23:36:15",
+  "resubmitted": null,
+  "locked": false,
+  "lockdate": "2024-12-19 23:36:14",
+  "trancutoff": null,
+  "sales_count": "0",
+  "sales": "0.00",
+  "credits_count": "1",
+  "credits": "140.99"
+}

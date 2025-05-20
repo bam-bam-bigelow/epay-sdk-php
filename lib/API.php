@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace USAePay;
 
 use Exception;
+use USAePay\Dto\AbstractList;
 use USAePay\Dto\Response\BatchesList;
 use USAePay\Dto\Response\Error;
+use USAePay\Dto\Response\TransactionsList;
 use USAePay\Exception\CurlException;
 use USAePay\Exception\SDKException;
+use USAePay\Interface\ListInterface;
 use USAePay\Interface\ResponseInterface;
 
 class API
@@ -228,7 +231,7 @@ class API
 
 			switch ($response['type']) {
 				case 'list':
-					return new BatchesList($response);
+					return self::createList($response);
 				default:
 					throw new SDKException("Unexpected Call Type");
 			}
@@ -256,5 +259,25 @@ class API
 		}
 
 		return new $class($data);
+	}
+
+	/**
+	 * @throws SDKException
+	 */
+	public static function createList(array $response): ResponseInterface {
+		$data = $response['data'] ?? [];
+		$dataType = $data[0]['type'] ?? null;
+
+		// check first element from $data and check what's inside
+		// batch - then create BatchesList
+		// transaction - then create TransactionsList
+		switch ($dataType) {
+			case 'batch':
+				return new BatchesList($response);
+			case 'transaction':
+				return new TransactionsList($response);
+			default:
+				throw new SDKException("Unexpected response type 281: " . gettype($response));
+		}
 	}
 }

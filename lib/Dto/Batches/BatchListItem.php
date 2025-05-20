@@ -49,7 +49,7 @@ class BatchListItem
 
 	public function __construct(array $data = []) {
 		if ($data['type'] !== self::TYPE_BATCH) {
-			throw new \InvalidArgumentException('Invalid type, expected "batch"');
+			throw new \InvalidArgumentException('Invalid type, expected "batch", got "' . $data['type'] . '"');
 		}
 		$this->type = self::TYPE_BATCH;
 

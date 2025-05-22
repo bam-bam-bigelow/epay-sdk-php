@@ -8,6 +8,20 @@ class TransactionListItem
 {
 	public const STATUS_SETTLED = 'Settled';
 
+	// https://help.usaepay.info/developer/reference/transactioncodes/#transaction-type-codes
+	private const TRANSACTION_TYPES = [
+		'S' => 'Sale',
+		'A' => 'Auth',
+		'C' => 'Refund',
+		'V' => 'Void',
+		'L' => 'Capture',
+		'Z' => 'VoidedRefund',
+		'_' => 'Verify',
+		'D' => 'Sale',
+		'N' => 'Refund',
+		'W' => 'Void',
+	];
+
 	private string $type;
 	private string $key;
 	private string $refnum;
@@ -34,6 +48,7 @@ class TransactionListItem
 	private array $shipping_address;
 	private array $platform;
 	private array $available_actions;
+	private array $rawData;
 
 	public function __construct(array $data) {
 		$this->type = $data['type'] ?? '';
@@ -62,6 +77,8 @@ class TransactionListItem
 		$this->shipping_address = $data['shipping_address'] ?? [];
 		$this->platform = $data['platform'] ?? [];
 		$this->available_actions = $data['available_actions'] ?? [];
+
+		$this->rawData = $data;
 	}
 
 	public function getType(): string {
@@ -174,5 +191,13 @@ class TransactionListItem
 
 	public function getState(): string {
 		return $this->billing_address['state'] ?? '';
+	}
+
+	public function getRawData(): array {
+		return $this->rawData;
+	}
+
+	public function getTransactionTypeLabel(): string {
+		return self::TRANSACTION_TYPES[$this->trantype_code] ?? 'Unknown';
 	}
 }

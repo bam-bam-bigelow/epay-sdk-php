@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace USAePay\Dto\Batches;
 
-class TransactionListItem
+use USAePay\Interface\ResponseInterface;
+
+class TransactionListItem implements ResponseInterface
 {
 	public const STATUS_SETTLED = 'Settled';
 

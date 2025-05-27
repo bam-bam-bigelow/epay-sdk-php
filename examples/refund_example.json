@@ -1,0 +1,21 @@
+{
+  "type": "transaction",
+  "key": "clacclacclac111",
+  "refnum": "0123456789",
+  "is_duplicate": "N",
+  "result_code": "A",
+  "result": "Approved",
+  "authcode": "123098",
+  "avs": {
+    "result_code": "   ",
+    "result": "Unmapped AVS response (   )"
+  },
+  "batch": {
+    "type": "batch",
+    s
+    "key": "blablablabla234",
+    "batchrefnum": "000222",
+    "sequence": "1"
+  },
+  "auth_amount": "1.00"
+}

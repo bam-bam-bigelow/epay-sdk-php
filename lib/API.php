@@ -6,6 +6,7 @@ namespace USAePay;
 
 use Exception;
 use USAePay\Dto\AbstractList;
+use USAePay\Dto\Batches\TransactionListItem;
 use USAePay\Dto\Response\BatchesList;
 use USAePay\Dto\Response\Error;
 use USAePay\Dto\Response\TransactionsList;
@@ -208,7 +209,7 @@ class API
 				break;
 
 			default:
-				throw new SDKException("Unexpected Call Type");
+				throw new SDKException("Unexpected Call Type (211): " . $type);
 		}
 
 		try {
@@ -232,8 +233,10 @@ class API
 			switch ($response['type']) {
 				case 'list':
 					return self::createList($response);
+				case 'transaction':
+					return new TransactionListItem($response);
 				default:
-					throw new SDKException("Unexpected Call Type");
+					throw new SDKException("Unexpected Call Type (236): " . $response['type'] ?? 'unknown');
 			}
 		} catch (Exception $e) {
 			return new Error($e->getMessage());

@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 namespace USAePay\Dto\Batches;
 
-class BatchListItem
+use USAePay\Interface\ResponseInterface;
+
+class BatchListItem implements ResponseInterface
 {
 	private const TYPE_BATCH = 'batch';
+	public float $total_amount;
+	public int $total_count;
+	public float $refunds_amount;
+	public int $refunds_count;
+	public ?string $status = null;
 
 	/**
 	 * This is the unique batch identifier.
@@ -67,6 +74,11 @@ class BatchListItem
 		$this->sales = (float)($data['sales'] ?? 0.0);
 		$this->creditsCount = (int)($data['credits_count'] ?? 0);
 		$this->credits = (float)($data['credits'] ?? 0.0);
+		$this->total_amount = (float)($data['total_amount'] ?? 0.0);
+		$this->total_count = (int)($data['total_count'] ?? 0);
+		$this->refunds_amount = (float)($data['refunds_amount'] ?? 0.0);
+		$this->refunds_count = (int)($data['refunds_count'] ?? 0);
+		$this->status = $data['status'] ?? null;
 	}
 
 	public function getKey(): string {
@@ -121,10 +133,16 @@ class BatchListItem
 		return $this->sales;
 	}
 
+	/**
+	 * @Deprecated
+	 */
 	public function getCreditsCount(): int {
 		return $this->creditsCount;
 	}
 
+	/**
+	 * @Deprecated
+	 */
 	public function getCredits(): float {
 		return $this->credits;
 	}

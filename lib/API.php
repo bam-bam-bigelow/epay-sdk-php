@@ -6,6 +6,7 @@ namespace USAePay;
 
 use Exception;
 use USAePay\Dto\AbstractList;
+use USAePay\Dto\Batches\BatchListItem;
 use USAePay\Dto\Batches\TransactionListItem;
 use USAePay\Dto\Response\BatchesList;
 use USAePay\Dto\Response\Error;
@@ -235,6 +236,9 @@ class API
 					return self::createList($response);
 				case 'transaction':
 					return new TransactionListItem($response);
+				case 'batch':
+					dd($response);
+					return new BatchListItem($response);
 				default:
 					throw new SDKException("Unexpected Call Type (236): " . $response['type'] ?? 'unknown');
 			}

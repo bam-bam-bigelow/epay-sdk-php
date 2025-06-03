@@ -62,4 +62,20 @@ class Batches
 			throw new SDKException("Unexpected exception thrown");
 		}
 	}
+
+	public static function getByKey(string $batchKey): ResponseInterface {
+		$Path = "/batches/" . $batchKey;
+		try {
+			$response = API::runCall('get', $Path, [], []);
+			if (!is_object($response)) {
+				throw new SDKException("Unexpected response type 55: " . gettype($response));
+			}
+
+			return $response;
+		} catch (SDKException $e) {
+			throw $e;
+		} catch (\Exception $e) {
+			throw new SDKException("Unexpected exception thrown");
+		}
+	}
 }

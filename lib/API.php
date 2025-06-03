@@ -237,7 +237,6 @@ class API
 				case 'transaction':
 					return new TransactionListItem($response);
 				case 'batch':
-					dd($response);
 					return new BatchListItem($response);
 				default:
 					throw new SDKException("Unexpected Call Type (236): " . $response['type'] ?? 'unknown');

@@ -14,6 +14,7 @@ class BatchListItem implements ResponseInterface
 	public float $refunds_amount;
 	public int $refunds_count;
 	public ?string $status = null;
+	public array $rawData;
 
 	/**
 	 * This is the unique batch identifier.
@@ -79,6 +80,8 @@ class BatchListItem implements ResponseInterface
 		$this->refunds_amount = (float)($data['refunds_amount'] ?? 0.0);
 		$this->refunds_count = (int)($data['refunds_count'] ?? 0);
 		$this->status = $data['status'] ?? null;
+
+		$this->rawData = $data; // Store the raw data for potential future use
 	}
 
 	public function getKey(): string {
@@ -145,5 +148,9 @@ class BatchListItem implements ResponseInterface
 	 */
 	public function getCredits(): float {
 		return $this->credits;
+	}
+
+	public function getRawData(): array {
+		return $this->rawData;
 	}
 }

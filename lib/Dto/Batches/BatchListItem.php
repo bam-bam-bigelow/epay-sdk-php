@@ -15,6 +15,8 @@ class BatchListItem implements ResponseInterface
 	public int $refunds_count;
 	public ?string $status = null;
 	public array $rawData;
+	public int $voids_count;
+	public float $voids_amount;
 
 	/**
 	 * This is the unique batch identifier.
@@ -73,12 +75,19 @@ class BatchListItem implements ResponseInterface
 		$this->tranCutoff = $data['trancutoff'] ?? null;
 		$this->salesCount = (int)($data['sales_count'] ?? 0);
 		$this->sales = (float)($data['sales'] ?? 0.0);
+		// credits_...
 		$this->creditsCount = (int)($data['credits_count'] ?? 0);
 		$this->credits = (float)($data['credits'] ?? 0.0);
+		// total_...
 		$this->total_amount = (float)($data['total_amount'] ?? 0.0);
 		$this->total_count = (int)($data['total_count'] ?? 0);
+		// refunds_...
 		$this->refunds_amount = (float)($data['refunds_amount'] ?? 0.0);
 		$this->refunds_count = (int)($data['refunds_count'] ?? 0);
+		// voids_...
+		$this->voids_count = (int)($data['voids_count'] ?? 0);
+		$this->voids_amount = (float)($data['voids_amount'] ?? 0.0);
+
 		$this->status = $data['status'] ?? null;
 
 		$this->rawData = $data; // Store the raw data for potential future use
@@ -152,5 +161,15 @@ class BatchListItem implements ResponseInterface
 
 	public function getRawData(): array {
 		return $this->rawData;
+	}
+
+	// voids+ refunds + credits
+	public function getTotalReturnsAmount(): float {
+		return $this->refunds_amount + $this->voids_amount + $this->credits;
+	}
+
+	// voids + refunds + credits
+	public function getTotalReturnsCount(): int {
+		return $this->refunds_count + $this->voids_count + $this->creditsCount;
 	}
 }

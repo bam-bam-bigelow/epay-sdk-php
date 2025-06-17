@@ -73,8 +73,10 @@ class BatchListItem implements ResponseInterface
 		$this->locked = (bool)($data['locked'] ?? false);
 		$this->lockDate = (string)($data['lockdate'] ?? '');
 		$this->tranCutoff = $data['trancutoff'] ?? null;
+
 		$this->salesCount = (int)($data['sales_count'] ?? 0);
-		$this->sales = (float)($data['sales'] ?? 0.0);
+		$this->sales = (float)($data['sales'] ?? $data['sales_amount'] ?? 0.0);
+
 		// credits_...
 		$this->creditsCount = (int)($data['credits_count'] ?? 0);
 		$this->credits = (float)($data['credits'] ?? 0.0);
@@ -171,5 +173,9 @@ class BatchListItem implements ResponseInterface
 	// voids + refunds + credits
 	public function getTotalReturnsCount(): int {
 		return $this->refunds_count + $this->voids_count + $this->creditsCount;
+	}
+
+	public function getTotalAmount(): float {
+		return $this->total_amount;
 	}
 }
